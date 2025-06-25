@@ -187,6 +187,26 @@ void input_callback(InputEvent* event, void* ctx) {
         default:
             break;
         }
+    } else if (event->type == InputTypeRepeat) {
+        switch(event->key) {
+        case InputKeyLeft:
+            if(app->selected == 0) app->a -= 0.5f;
+            if(app->selected == 1) app->b -= 0.5f;
+            if(app->selected == 2) app->c -= 0.5f;
+            break;
+        case InputKeyRight:
+            if(app->selected == 0) app->a += 0.5f;
+            if(app->selected == 1) app->b += 0.5f;
+            if(app->selected == 2) app->c += 0.5f;
+            if(app->selected == 3) {
+                app->screen_state = SCREEN_ABOUT;
+                view_port_draw_callback_set(app->view_port, draw_about, app);
+                view_port_input_callback_set(app->view_port, result_input_callback, app);
+            }
+            break;
+        default: 
+            break;
+        }
     }
     view_port_update(app->view_port);
 }
